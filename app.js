@@ -1,43 +1,45 @@
 const express = require('express')
 const morgan = require('morgan')
-const app = express()
-
 
 const tourRouter = require('./router/tourRoutes')
 const userRouter = require('./router/userRoutes')
-// 1) MIDDLEWARES
 
+
+const app = express()
+
+
+// 1) MIDDELWARE
+// middelware - mes req, res
+app.use(express.json())
 
 app.use(morgan('dev'))
 
-app.use((req,res,next) => {
-    console.log("Hello from the middle ware")
+
+app.use((req, res, next) => {
+    console.log("Hello from the middelware")
     next()
 })
 
-app.use((req,res,next) => {
+app.use((req, res, next) => {
     req.requestTime = new Date().toISOString()
     next()
 })
 
-// middelware - mes req, res
-app.use(express.json())
+
+// 2) ROUTE HANDLERS
+
+
+
+// 3) ROUTE
+
+app.use('/api/v1/tours', tourRouter)
+app.use('/api/v1/users', userRouter)
 
 
 
 
-//2) ROUT HANDELER
+// 4) SERVER 
 
-
-
-
-
-
-
-
-
-app.use("/api/v1/tours" , tourRouter)
-app.use("/api/v1/users" , userRouter)
-
-
-module.exports = app
+app.listen(3000, () => {
+    console.log("Server is listeing")
+})
