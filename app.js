@@ -8,9 +8,22 @@ const userRouter = require('./router/userRoutes')
 const app = express()
 
 
+console.log(process.env.NODE_ENV)
 // 1) MIDDELWARE
 // middelware - mes req, res
+
+
+if(process.env.NODE_ENV === "development"){
+    app.use(express.json())
+}
+
+
 app.use(express.json())
+
+
+app.use(express.static(`${__dirname}/public`))
+
+
 
 app.use(morgan('dev'))
 
@@ -37,9 +50,4 @@ app.use('/api/v1/users', userRouter)
 
 
 
-
-// 4) SERVER 
-
-app.listen(3000, () => {
-    console.log("Server is listeing")
-})
+module.exports = app
