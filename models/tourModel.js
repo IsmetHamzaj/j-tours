@@ -7,7 +7,7 @@ const tourSchema = new mongoose.Schema({
         unique: true,
         trim: true,
     },
-    duartion: {
+    duration: {
         type: Number,
         required: [true, "A tour must have a duration"],
     },
